@@ -171,6 +171,7 @@ let signIn = async (req, res, next) => {
       return sendOk({
         res,
         token,
+        user,
         status: 200,
         message: 'Success',
         error: false

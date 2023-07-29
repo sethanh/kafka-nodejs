@@ -1,48 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import Notification from './Notification';
+
+import { axiosService } from './services';
+
+export const LoginApi = (payload) => {
+  return axiosService.post(`users/signIn`,payload)
+}
 
 function App() {
   const [ facts, setFacts ] = useState([]);
   const [count, setCount] = useState(0);
   const [ listening, setListening ] = useState(false);
+  const [user, setUser]= useState(null);
 
   useEffect( () => {
-    if (!listening) {
-      const events = new EventSource('http://localhost:3001/events/2');
-
-      events.onmessage = (event) => {
-        console.log(count,event.data);
-        const parsedData = JSON.parse(event.data);
-
-        setFacts(parsedData);
-        setCount(count+1);
-      };
-
-      setListening(true);
+    var loginData = {
+      phone: "thanhse001@gmail.com",
+      password: "se2012520",
+      email: "thanhse123@gmail.com"
     }
+
+    LoginApi(loginData).then(
+      res => {
+        console.log('x', res);
+        setUser(res.data.user);
+      }
+    );
   }, [listening, facts]);
 
   console.log(facts.length,facts);
 
   return (
-    <table className="stats-table">
-      <thead>
-        <tr>
-          <th>Fact</th>
-          <th>Source</th>
-        </tr>
-      </thead>
-      <tbody>
-        {/* {
-          facts.map((fact, i) =>
-            <tr key={i}>
-              <td>{fact.info}</td>
-              <td>{fact.source}</td>
-            </tr>
-          )
-        } */}
-      </tbody>
-    </table>
+    <div className="stats-div">
+      <div>Đăng nhập</div>
+      {
+        user && <Notification />
+      }
+    </div>
   );
 }
 

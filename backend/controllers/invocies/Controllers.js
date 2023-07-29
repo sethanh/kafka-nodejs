@@ -108,13 +108,15 @@ let create = async (req, res, next) => {
         ]
     })
 
-    return sendOk({
-        res,
-        status: 200,
-        message: 'Tạo hoá đơn thành công',
-        data: data,
-        error: false
-    });
+    // return sendOk({
+    //     res,
+    //     status: 200,
+    //     message: 'Tạo hoá đơn thành công',
+    //     data: data,
+    //     error: false
+    // });
+    req.resData = data;
+    next()
 };
 
 

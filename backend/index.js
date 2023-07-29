@@ -1,6 +1,5 @@
 require('dotenv').config();
 let express = require('express');
-
 let morgan = require('morgan');
 let bodyParser = require('body-parser');
 let session = require('express-session');
@@ -10,6 +9,7 @@ let cors = require('cors');
 let app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+let { sendOk, sendErr } = require('./components')
 var event = require("events");
 const eventEmitter = new event.EventEmitter();
 eventEmitter.setMaxListeners(150);
@@ -128,17 +128,21 @@ consumer.on('message', function (message) {
 
 const Log = async (req, res, next) => {
   try {
-    const { body} = req;
+    const { body, resData } = req;
     const { user_id } = body;
     payloads = [
-      { topic: 'product', messages: circularJSON.stringify(req.body), key: user_id },
+      { topic: 'product', messages: circularJSON.stringify(resData), key: user_id },
     ];
     producer.send(payloads, function (err, data) {
       console.log(data);
     });
-
-    // console.log(circularJSON.stringify(req.body));
-    next();
+    return sendOk({
+        res,
+        status: 200,
+        message: 'Tạo hoá đơn thành công',
+        data: resData,
+        error: false
+    });
   } catch (error) {
     console.log(error);
   }
@@ -170,7 +174,7 @@ app.use("/socialSettings", social_settingRotes);
 app.use("/roadmaps", roadmapRoutes);
 app.use("/submits", submitRoutes);
 app.use("/products", productRoutes);
-app.use("/invoices", Log, invoiceRoutes);
+app.use("/invoices", invoiceRoutes, Log);
 
 app.use(express.static('public'));
 
