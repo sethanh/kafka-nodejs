@@ -5,37 +5,53 @@ import Notification from './Notification';
 import { axiosService } from './services';
 
 export const LoginApi = (payload) => {
-  return axiosService.post(`users/signIn`,payload)
+  return axiosService.post(`users/signIn`, payload)
 }
 
 function App() {
-  const [ facts, setFacts ] = useState([]);
-  const [count, setCount] = useState(0);
-  const [ listening, setListening ] = useState(false);
-  const [user, setUser]= useState(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [user, setUser] = useState(null);
 
-  useEffect( () => {
+  const onSubmit = () => {
     var loginData = {
-      phone: "thanhse001@gmail.com",
-      password: "se2012520",
-      email: "thanhse123@gmail.com"
+      email,
+      password
     }
-
     LoginApi(loginData).then(
       res => {
-        console.log('x', res);
-        setUser(res.data.user);
+        console.log(res);
+        if (res.status === 200) {
+          setUser(res.data.user);
+        }
       }
     );
-  }, [listening, facts]);
+  }
 
-  console.log(facts.length,facts);
+  console.log(user);
 
   return (
     <div className="stats-div">
-      <div>Đăng nhập</div>
+      {!user &&
+        <>
+          <input
+            style={{marginTop:200}}
+            name="email"
+            className='input'
+            placeholder='email'
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            name="password"
+            className='input'
+            placeholder='password'
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <div className='button' onClick={() => onSubmit()}> Login</div>
+        </>
+      }
       {
-        user && <Notification />
+        user && <Notification user={user} />
       }
     </div>
   );

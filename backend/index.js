@@ -26,7 +26,7 @@ var kafka = require('kafka-node'),
 var consumer = new Consumer(
   client,
   [
-    { topic: 'product', partition: 0 }
+    { topic: 'notification', partition: 0 }
   ],
   {
     autoCommit: false
@@ -52,7 +52,7 @@ function eventsHandler(request, response, next) {
   };
   response.writeHead(200, headers);
 
-  const data = `data: ${circularJSON.stringify(invoices[id])}\n\n`;
+  const data = `data: ${JSON.stringify(invoices[id]||[])}\n\n`;
 
   response.write(data);
 
@@ -131,7 +131,7 @@ const Log = async (req, res, next) => {
     const { body, resData } = req;
     const { user_id } = body;
     payloads = [
-      { topic: 'product', messages: circularJSON.stringify(resData), key: user_id },
+      { topic: 'notification', messages: circularJSON.stringify(resData), key: user_id },
     ];
     producer.send(payloads, function (err, data) {
       console.log(data);
