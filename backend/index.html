@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LOG REPORT</title>
+    <style>
+      body { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-align: center;  font-size: large;}
+
+      #title { font-size:larger; font-weight: 800; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; margin: 32px; }
+      #get { color: green;}
+      #post { color: goldenrod;}
+      #put { color: rgb(12, 12, 206);}
+      #delete { color: rgb(156, 18, 18);}
+    </style>
+  </head>
+  <body>
+    <div id="title">LOG REPORT</div>
+    <div id="rp">
+      <div id="post"></div>
+      <div id="get"></div>
+      <div id="put"></div>
+      <div id="delete"></div>
+    </div>
+    
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+      var socket = io();
+
+      // var messages = document.getElementById('messages');
+      var gets = document.getElementById('get');
+      var deletes = document.getElementById('delete');
+      var posts = document.getElementById('post');
+      var puts = document.getElementById('put');
+
+      socket.on('chat message', function(msg) {
+        var responses  =  msg.data;
+        var data = [];
+        for(let i =2 ; i < responses.length; i++)
+        {
+          data = [...data, JSON.parse(responses[i])];
+        }
+        posts.textContent = "POST :" + data.filter(s => s.method == "POST").length ?? 0;
+        gets.textContent = "GET :" + data.filter(s => s.method == "GET").length ?? 0;
+        puts.textContent = "PUT :" + data.filter(s => s.method == "PUT").length ?? 0;
+        deletes.textContent = "DELETE :" + data.filter(s => s.method == "DELETE").length ?? 0;
+      });
+    </script>
+  </body>
+</html>

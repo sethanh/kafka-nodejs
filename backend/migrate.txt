@@ -1,0 +1,37 @@
+docker-compose exec api sh
+	
+sequelize-cli model:generate --name Mom --attributes firstname:string,lastName:string,married:integer
+models Child:
+  Child.belongsTo(models.Mom);
+  models.Mom.hasMany(Child);
+
+sequelize-cli migration:generate --name child-mom-association
+sequelize-cli db:migrate
+
+status:
+  0: not verified
+  1: verified
+  2: baned
+  3: deleted
+
+sequelize-cli model:generate --name Users --attributes phone:string,first_name:string,last_name:string,email:string,address:string,rule:string,password:string,status:integer,referral_by:string,created_by:string
+sequelize-cli model:generate --name Loyaltys --attributes created_by:string,reason:string,point:string,user_id:integer
+sequelize-cli model:generate --name Settings --attributes comming_soon:boolean,signup_count_down:date,ico_count_down:date,final_lander_page:date
+
+sequelize-cli migration:generate --name Loyaltys-association
+
+sequelize-cli model:generate --name Generaties --attributes head:string,code:integer
+sequelize-cli model:generate --name Social_settings --attributes name:string,link:string,status:boolean,image_code:integer
+
+sequelize-cli model:generate --name Roadmaps --attributes name:string,title:string,code:integer
+sequelize-cli model:generate --name Roadmap_details --attributes name:string,status:boolean,code:integer,road_id:integer
+
+sequelize-cli migration:generate --name Roadmap-details-association
+
+sequelize-cli model:generate --name Invoices --attributes created_by:string,user_id:integer,total:integer,invoice_code:string
+sequelize-cli migration:generate --name Invoices-association
+
+sequelize-cli model:generate --name Products --attributes created_by:string,price:integer,product_id:integer,product_code:string
+
+sequelize-cli model:generate --name InvoiceDetails --attributes created_by:string,product_id:integer,total:integer,invoice_id:integer
+sequelize-cli migration:generate --name InvoiceDetails-association

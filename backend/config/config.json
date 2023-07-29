@@ -1,0 +1,25 @@
+{
+  "development": {
+    "username": "easysalon",
+    "password": "ctnet@1812",
+    "database": "ntsdata",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "Se2012520",
+    "database": "ntsdata",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "production": {
+    "username": "root",
+    "password": "Se2012520",
+    "database": "ntsdata",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  }
+}
