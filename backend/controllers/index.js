@@ -1,21 +1,21 @@
-const userController = require('./users/Controllers');
-const uploadsController= require('./uploads/Controllers');
-const settingController = require('./settings/Controllers');
-const verifyController = require('./verifies/Controllers');
-const social_settingController = require('./social_settings/Controllers');
-const roadmapController = require('./roadmaps/Controllers');
-const submitController = require('./submits/Controllers');
-const productController = require('./products/Controllers');
-const invoiceController = require('./invocies/Controllers');
+const UserController = require('./UserControllers');
+const UploadsController= require('./UploadControllers');
+const SettingController = require('./SettingControllers');
+const VerifyController = require('./VerifyControllers');
+const SocialSettingController = require('./SocialSettingControllers');
+const RoadmapController = require('./RoadmapControllers');
+const SubmitController = require('./SubmitControllers');
+const ProductController = require('./ProductControllers');
+const InvoiceController = require('./InvoiceControllers');
 
 module.exports = { 
-    userController, 
-    uploadsController,
-    settingController,
-    verifyController,
-    social_settingController,
-    roadmapController,
-    submitController,
-    productController,
-    invoiceController
+    UserController, 
+    UploadsController,
+    SettingController,
+    VerifyController,
+    SocialSettingController,
+    RoadmapController,
+    SubmitController,
+    ProductController,
+    InvoiceController
  };

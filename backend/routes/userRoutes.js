@@ -1,7 +1,7 @@
 let express = require("express");
 let router = new express.Router();
-let { userController } = require('../controllers');
-const { signIn, signUp, index, signInByToken, exportToScv } = userController;
+let { UserController } = require('../controllers');
+const { signIn, signUp, index, signInByToken, exportToScv } = UserController;
 let { Auth } = require('../middlewares');
 const { accountAuth, tokenAuth, hasEmail, hasEmailVerify } = Auth
 

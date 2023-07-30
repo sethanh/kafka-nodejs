@@ -1,7 +1,7 @@
 let express = require("express");
 let router = new express.Router();
-let { productController } = require('../controllers');
-const { index, updated, create } = productController;
+let { ProductController } = require('../controllers');
+const { index, updated, create } = ProductController;
 let { Auth } = require('../middlewares');
 const { tokenAuth } = Auth
 

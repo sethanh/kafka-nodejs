@@ -1,7 +1,7 @@
 let express = require("express");
 let router = new express.Router();
-let { submitController } = require('../controllers');
-const { index, show, updated, destroy, post } = submitController;
+let { SubmitController } = require('../controllers');
+const { index, show, updated, destroy, post } = SubmitController;
 let { Auth } = require('../middlewares');
 const { accountAuth, tokenAuth, hasEmail, hasEmailVerify } = Auth
 

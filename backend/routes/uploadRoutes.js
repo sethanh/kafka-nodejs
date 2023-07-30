@@ -1,7 +1,7 @@
 let express = require("express");
 let router = new express.Router();
-let { uploadsController } = require('../controllers');
-const { upload, updateSuccess }= uploadsController;
+let { UploadsController } = require('../controllers');
+const { upload, updateSuccess }= UploadsController;
 let {Auth} = require('../middlewares');
 const {tokenAuth}= Auth
 

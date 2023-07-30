@@ -1,7 +1,7 @@
 let express = require("express");
 let router = new express.Router();
-let { verifyController } = require('../controllers');
-const { verifySignUp } = verifyController;
+let { VerifyController } = require('../controllers');
+const { verifySignUp } = VerifyController;
 
 
 router.get("/:id/signup",verifySignUp);

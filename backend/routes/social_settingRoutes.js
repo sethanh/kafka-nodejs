@@ -1,7 +1,7 @@
 let express = require("express");
 let router = new express.Router();
-let { social_settingController } = require('../controllers');
-const {index,updated} = social_settingController;
+let { SocialSettingController } = require('../controllers');
+const {index,updated} = SocialSettingController;
 let { Auth } = require('../middlewares');
 const {  tokenAuth} = Auth
 
