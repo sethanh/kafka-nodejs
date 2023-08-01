@@ -1,21 +1,21 @@
-const userRoutes = require('./userRoutes');
-const settingRoutes = require('./settingRoutes');
-const uploadRoutes = require('./uploadRoutes');
-const verifyRoutes = require('./verifyRoutes');
-const social_settingRotes = require('./social_settingRoutes');
-const roadmapRoutes = require('./roadmapRoutes');
-const submitRoutes = require('./submitsRoutes');
-const productRoutes = require('./productRoutes');
-const invoiceRoutes = require('./invoiceRoutes');
+const UserRoutes = require('./UserRoutes');
+const SettingRoutes = require('./SettingRoutes');
+const UploadRoutes = require('./UploadRoutes');
+const VerifyRoutes = require('./VerifyRoutes');
+const SocialSettingRotes = require('./SocialSettingRoutes');
+const RoadmapRoutes = require('./RoadmapRoutes');
+const SubmitRoutes = require('./SubmitsRoutes');
+const ProductRoutes = require('./ProductRoutes');
+const InvoiceRoutes = require('./InvoiceRoutes');
 
-module.exports = { 
-    userRoutes,
-    settingRoutes,
-    uploadRoutes,
-    verifyRoutes,
-    social_settingRotes,
-    roadmapRoutes,
-    submitRoutes,
-    productRoutes,
-    invoiceRoutes
-};
+module.exports = [
+    { Key: "users", Route: UserRoutes },
+    { Key: "settings", Route: SettingRoutes },
+    { Key: "uploads", Route: UploadRoutes },
+    { Key: "verify", Route: VerifyRoutes },
+    { Key: "roadmaps", Route: RoadmapRoutes },
+    { Key: "submits", Route: SubmitRoutes, },
+    { Key: "products", Route: ProductRoutes },
+    { Key: "invoices", Route: InvoiceRoutes },
+    { Key: "socialSettings", Route: SocialSettingRotes }
+]

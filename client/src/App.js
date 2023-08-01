@@ -45,6 +45,7 @@ function App() {
             name="password"
             className='input'
             placeholder='password'
+            type='password'
             onChange={(e) => setPassword(e.target.value)}
           />
           <div className='button' onClick={() => onSubmit()}> Login</div>

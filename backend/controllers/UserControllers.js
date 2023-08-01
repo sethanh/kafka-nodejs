@@ -1,4 +1,5 @@
-let { sendOk, sendErr, meta, overView, searchKeyWord } = require('./../components')
+let { sendOk, sendErr, meta, overView, searchKeyWord } = require('./../components');
+let RES = require('./../responses')
 var jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const saltRounds = 10;
@@ -195,13 +196,7 @@ let signIn = async (req, res, next) => {
 let signUp = async (req, res, next) => {
   const { password, secret, user, code, ...body } = req.body;
 
-  if (user) {
-    return sendErr({
-      res: res,
-      message: 'Email already exists',
-      status: 409
-    })
-  }
+  if (user) { return RES.BadRequest(res, 'Email already exists'); }
 
   body.status = 0;
 
@@ -233,33 +228,24 @@ let signUp = async (req, res, next) => {
         ...old_code,
         code: old_code.code + 1
       }).then(async (updated) => {
-        console.log('ok', updated);
         data = await users.create({ ...body, code: newcode, password: passwordHash });
       })
-        .catch((err) => {
-          return sendErr({
-            res: res,
-            message: JSON.stringify(err),
-            status: 420
-          })
-        });
+      .catch((err) => {
+        return RES.Error(res, JSON.stringify(err))
+      });
     }
 
     mailer.sendMail(body.email, "Verify Email", contentEmail(process.env.APP_URL, newcode, body.email))
 
-    return sendOk({
-      res,
-      status: 200,
+    var result = {
       message: 'Registration is successful, to continue please check your account verification email',
       data: code,
-      error: false
-    });
+    }
+
+    return RES.Ok(res, result);
+
   } catch (err) {
-    return sendErr({
-      res: res,
-      message: JSON.stringify(err),
-      status: 500
-    })
+    return RES.Error(res, JSON.stringify(err))
   }
 };
 
