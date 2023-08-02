@@ -1,56 +1,18 @@
 const serviceName = 'users';
 const db = require("../models");
+const BaseService = require('./BaseService');
 base = db[serviceName];
 
 var GetAll = async (filters) => {
-    try {
-        var result = await base.findAll({
-            where: {
-                ...filters
-            }
-        })
-        return result;
-    }
-
-    catch (err) {
-        var error = {
-            QueryError: true,
-            Message: JSON.stringify(err)
-        }
-        return error;
-    }
+    return BaseService.GetAll(base, filters);
 }
 
 var FirstOrDefault = async (filters) => {
-    try {
-        var result = await base.findOne({
-            where: {
-                ...filters
-            }
-        })
-        return result;
-    }
-    catch (err) {
-        var error = {
-            QueryError: true,
-            Message: JSON.stringify(err)
-        }
-        return error;
-    }
+    return BaseService.FirstOrDefault(base, filters);
 }
 
-var Add =  async (data) => {
-    try {
-        var result = await base.create({...data});
-        return result;
-    }
-    catch (err) {
-        var error = {
-            QueryError: true,
-            Message: JSON.stringify(err)
-        }
-        return error;
-    }
+var Add = async (data) => {
+    return BaseService.Add(base, data);
 }
 
 let contentEmail = (host, code, email) => {
