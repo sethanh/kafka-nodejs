@@ -41,10 +41,8 @@ app.get('/', (req, res) => {
 });
 
 var lengthRoutes = Routes.length;
-console.log(lengthRoutes)
 
 for (let i = 0; i < lengthRoutes; i++) {
-  console.log(i, Routes[i])
   app.use(`/${Routes[i].Key}`, Routes[i].Route);
 }
 

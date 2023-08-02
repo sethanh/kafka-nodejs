@@ -1,4 +1,6 @@
-let Ok = async (res, result) => {
+const { result } = require("lodash");
+
+let Ok = (res, result) => {
     return res.status(200).send({
         message: "success",
         ...result,
@@ -6,7 +8,7 @@ let Ok = async (res, result) => {
     });
 };
 
-let OkList = async (res, result, page) => {
+let OkList = (res, result, page) => {
 
     // let Meta = OkMeta(result, page);
 
@@ -18,7 +20,7 @@ let OkList = async (res, result, page) => {
     });
 };
 
-let BadRequest = async (res, message) => {
+let BadRequest =  (res, message) => {
     return res.status(400).send({
         message: message,
         err: true,
@@ -26,7 +28,7 @@ let BadRequest = async (res, message) => {
     });
 };
 
-let Forbidden = async (res) => {
+let Forbidden = (res) => {
     return res.status(403).send({
         ...result,
         err: true,
@@ -34,7 +36,7 @@ let Forbidden = async (res) => {
     });
 };
 
-let NotFound = async (res) => {
+let NotFound = (res) => {
 
     // let Meta = OkMeta(result, page);
     return res.status(404).send({
@@ -42,7 +44,7 @@ let NotFound = async (res) => {
     });
 };
 
-let Error = async (res, message) => {
+let Error = (res, message) => {
 
     // let Meta = OkMeta(result, page);
 
@@ -53,7 +55,6 @@ let Error = async (res, message) => {
         // Meta
     });
 };
-
 // let OkMeta = async (data, page) => {
 //     const length = data.length;
 //     return {
