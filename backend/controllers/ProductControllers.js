@@ -1,39 +1,23 @@
-let { sendOk, sendErr } = require('./../components')
-const db = require("../models");
-const { products, generaties } = db;
+const Service = require('../services');
+let BaseService = Service.ProductServices;
+let { GenerateServices } = Service;
+let RES = require('./../responses');
 
 let index = async (req, res) => {
-  const { user } = req
-  if (user) {
-    try {
-      var data = await products.findAll({
-      })
-      return sendOk({
-        res: res,
-        status: 200,
-        message: 'Success',
-        data: data,
-      });
-    }
-    catch (err) {
-      return sendErr({
-        res: res,
-        message: JSON.stringify(err),
-        status: 500
-      })
-    }
-  }
-  else return sendErr({
-    res: res,
-    message: 'Lỗi xác thực',
-    status: 500
-  })
+  var datas = await BaseService.GetAll();
+  if (datas.QueryError) { return RES.Error(res, datas.Message) }
 
+  return RES.OkList(res, { data: datas }, 0);
 }
 
 let show = async (req, res, next) => {
   const { params } = req;
   const { id } = params;
+
+  var data = await BaseService.FirstOrDefault({ id });
+  if (data.QueryError) { return RES.Error(res, data.Message) }
+
+  return RES.Ok(res, { data });
 };
 
 let destroy = async (req, res, next) => {
@@ -44,67 +28,22 @@ let destroy = async (req, res, next) => {
 let create = async (req, res, next) => {
   const { user, ...body } = req.body;
 
-  var number = await generaties.findOne({ where: { head: "PRODUCT" } });
+  var number = await GenerateServices.FirstOrDefault({ head: "PRODUCT" });
   var newcode = `MASP${number.code + 1}`;
-  number.update(
-    {
-      ...number,
-      code : number.code +1
-    }
-  );
+  var x = number.code + 1;
+  var updateNumber = await GenerateServices.Update(number, { ...number, code: number.code + 1 });
+  console.log(x,updateNumber);
 
-  data = await products.create({ ...body, product_code: newcode });
+  data = await BaseService.Add({ ...body, product_code: newcode });
+  if (data.QueryError) { return RES.Error(res, data.Message) }
 
-  return sendOk({
-    res,
-    status: 200,
-    message: 'Tạo Sản Phẩm thành công',
-    data: data,
-    error: false
-  });
+  return RES.Ok(res, { data });
 };
 
 
 let updated = async (req, res, next) => {
-  const { user, body, params } = req;
+  const { params } = req;
   const { id } = params;
-
-  if (user) {
-    try {
-      var oldSetting = await roadmaps.findOne({ where: { id: id } })
-      oldSetting.update({
-        ...oldSetting,
-        ...body
-      }).then(async (updatedTask) => {
-        return sendOk({
-          res: res,
-          status: 200,
-          message: 'Success',
-          data: updatedTask,
-        });
-      })
-        .catch((err) => {
-          return sendErr({
-            res: res,
-            message: JSON.stringify(err),
-            status: 420
-          })
-        });
-    }
-    catch (err) {
-      return sendErr({
-        res: res,
-        message: JSON.stringify(err),
-        status: 500
-      })
-    }
-  }
-  else return sendErr({
-    res: res,
-    message: 'Lỗi xác thực',
-    status: 500
-  })
-
 };
 
 module.exports = { index, show, updated, destroy, create };

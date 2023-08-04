@@ -1,18 +1,27 @@
-const serviceName = 'users';
 const db = require("../models");
 const BaseService = require('./BaseService');
-base = db[serviceName];
+
+let GetBaseModel = (name = 'users') => {
+    return base = db[name];
+}
 
 var GetAll = async (filters) => {
+    var base = GetBaseModel();
     return BaseService.GetAll(base, filters);
 }
 
 var FirstOrDefault = async (filters) => {
+    var base = GetBaseModel();
     return BaseService.FirstOrDefault(base, filters);
 }
 
 var Add = async (data) => {
+    var base = GetBaseModel();
     return BaseService.Add(base, data);
+}
+
+var Update = async (OBJ, newOBJ) => {
+    return BaseService.Update(OBJ, newOBJ);
 }
 
 let contentEmail = (host, code, email) => {
@@ -34,4 +43,4 @@ let contentEmail = (host, code, email) => {
     `
 };
 
-module.exports = { contentEmail, GetAll, FirstOrDefault, Add };
+module.exports = { contentEmail, GetAll, FirstOrDefault, Add, Update };

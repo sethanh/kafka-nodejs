@@ -49,4 +49,18 @@ var Add = async (base, data) => {
     }
 }
 
-module.exports = { GetAll, FirstOrDefault, Add };
+var Update = async (OBJ, newOBJ) => {
+    try {
+        var result = await OBJ.update({ ...newOBJ });
+        return result;
+    }
+    catch (err) {
+        var error = {
+            QueryError: true,
+            Message: JSON.stringify(err)
+        }
+        return error;
+    }
+}
+
+module.exports = { GetAll, FirstOrDefault, Add, Update };
