@@ -5,7 +5,8 @@ let RES = require('./../responses')
 var jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const saltRounds = 10;
-let { Key } = require('./../key/keyJWT');
+let { Key } = require('../key/keyJWT');
+let { TYPE_GENERATE_CODE, GENERATE_CODE } = require('../key/Constants');
 
 let index = async (req, res) => {
   var datas = await BaseService.GetAll();
@@ -69,8 +70,8 @@ let signUp = async (req, res, next) => {
   let passwordHash = bcrypt.hashSync(password, salt);
   let newcode = code;
 
-  var old_code = await GenerateServices.FirstOrDefault({ head: "WIREICO" });
-  newcode = `WIREICO${old_code.code + 1}`;
+  var old_code = await GenerateServices.FirstOrDefault({ head: TYPE_GENERATE_CODE.USER });
+  newcode = `${GENERATE_CODE.USER}${old_code.code + 1}`;
 
   var update_code = await GenerateServices.Update(old_code, {...old_code,code: old_code.code + 1});
   if (update_code.QueryError) { return RES.Error(res, update_code.Message) }

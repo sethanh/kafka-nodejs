@@ -4,12 +4,9 @@ let morgan = require('morgan');
 let bodyParser = require('body-parser');
 let session = require('express-session');
 let MySQLStore = require('express-mysql-session')(session);
-const circularJSON = require('circular-json');
 let cors = require('cors');
 let app = express();
 const http = require('http').Server(app);
-const io = require('socket.io')(http);
-let { sendOk, sendErr } = require('./components')
 
 const Routes = require('./routes');
 
