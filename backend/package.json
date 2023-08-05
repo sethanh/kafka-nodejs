@@ -7,7 +7,7 @@
     "start": "nodemon run index.js",
     "db:create": "npx sequelize db:create",
     "db:migrate": "npx sequelize db:migrate",
-    "db:seed":  "npx sequelize db:seed:all",
+    "db:seed": "npx sequelize db:seed:all",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
